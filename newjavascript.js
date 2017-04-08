@@ -115,15 +115,51 @@ function addEventHandler(obj, evt, handler) {
     }
 }
 
-
+//from https://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
 function blala(){
+   
     console.log("button pressed");
     var img = document.createElement("img");
     var ctx = document.getElementById('canvas').getContext("2d");
 
     var width = $('img').width();
-    var height = $('img').height()
+    var height = $('img').height();
     ctx.drawImage(img, 0, 0, width, height);
+    var imgData = ctx.createImageData(width, height);
+    var data = imgData.data;
+    var pixels = ctx.getImageData(0, 0, width, height);    
+    for (var i = 0, ii = pixels.data.length; i < ii; i += 4) {
+        var r = pixels.data[i + 0];
+        var g = pixels.data[i + 1];
+        var b = pixels.data[i + 2];
+        var hsv =rgb2hsv(r,g,b);
+    }            
+}
+
+
+//from https://msdn.microsoft.com/en-us/library/jj203843%28v=vs.85%29.aspx
+function rgb2hsv(r, g, b) {
+    //  Converts RGB value to HSV value
+    var Hue = 0;
+    var Sat = 0;
+    var Val = 0;
+
+    //  Convert to a percentage
+    r = r / 255; g = g / 255; b = b / 255;
+    var minRGB = Math.min(r, g, b);
+    var maxRGB = Math.max(r, g, b);
+
+    // Check for a grayscale image
+    if (minRGB == maxRGB) {
+        Val = parseInt((minRGB * 100) + .5); // Round up
+        return [Hue, Sat, Val];  
+    }
+    var d = (r == minRGB) ? g - b : ((b == minRGB) ? r - g : b - r);
+    var h = (r == minRGB) ? 3 : ((b == minRGB) ? 1 : 5);
+    Hue = parseInt(60 * (h - d / (maxRGB - minRGB)));
+    Sat = parseInt((((maxRGB - minRGB) / maxRGB) * 100) + .5);
+    Val = parseInt((maxRGB * 100) + .5); // Round up
+    return [Hue, Sat, Val];
 }
 
 //Not plugged yet
