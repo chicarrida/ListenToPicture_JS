@@ -1,1 +1,38 @@
-/home/linux/NetBeansProjects/ListenToPicture/public_html/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>A File Display Demo</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" language="javascript" src="newjavascript.js"></script>
+<style>
+#drop {
+  min-height: 150px;
+  width: 250px;
+  border: 1px solid blue;
+  margin: 10px;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+<!--  <h1 align=center>A File Preview Demo</h1>
+  <DIV id="status">Drag the files from a folder to a selected area ...</DIV>
+
+  <DIV id="drop">Drop files here.</DIV>
+  <DIV id="list"></DIV>
+  -->
+  <DIV id="drop"> 
+    <div class="msg-drop">
+    <span class="glyphicon glyphicon-cloud-upload cloud"></span>
+        Drop files here or click to <span id="browse">browse</span>.
+    
+    </div>
+    
+</DIV>
+<input id="fileBox" type="file"/>    
+<DIV id="status"></DIV>
+<DIV id="list"></DIV>
+  
+</body>
+</html>
