@@ -2,9 +2,9 @@
 
 
 $(window).load(function(){
+    $('#startButton').click(blala);
     $('#drop').click(function(){
-        console.log('click');
-        $('#fileBox').trigger('click');
+        console.log('click');      
     });
     //Remove item
     $('.fileCont span').click(function(){
@@ -45,6 +45,8 @@ if (window.FileReader) {
 
                 reader.readAsDataURL(file);
                 addEventHandler(reader, 'loadend', function (e, file) {
+                    console.log("file:");
+                    console.log(file);
                     var bin = this.result;
                     var fileCont = document.createElement('div');
                     fileCont.className = "fileCont";
@@ -113,6 +115,16 @@ function addEventHandler(obj, evt, handler) {
     }
 }
 
+
+function blala(){
+    console.log("button pressed");
+    var img = document.createElement("img");
+    var ctx = document.getElementById('canvas').getContext("2d");
+
+    var width = $('img').width();
+    var height = $('img').height()
+    ctx.drawImage(img, 0, 0, width, height);
+}
 
 //Not plugged yet
 var bar = $('.progress-bar');
