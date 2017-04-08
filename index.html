@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset=utf-8 />
-<title>A File Display Demo</title>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" language="javascript" src="newjavascript.js"></script>
-<style>
-#drop {
-  min-height: 150px;
-  width: 250px;
-  border: 1px solid blue;
-  margin: 10px;
-  padding: 10px;
-}
-</style>
-</head>
-<body>
-  <DIV id="drop"> 
-    <div class="msg-drop">
-    <span class="glyphicon glyphicon-cloud-upload cloud"></span>
+  <head>
+    <meta charset=utf-8 />
+    <title>A File Display Demo</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" language="javascript" src="newjavascript.js"></script>
+    <script type="text/javascript" src="target/elm.js"></script>
+    <style>
+      #drop {
+        min-height: 150px;
+        width: 250px;
+        border: 1px solid blue;
+        margin: 10px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <DIV id="drop">
+      <div class="msg-drop">
+        <span class="glyphicon glyphicon-cloud-upload cloud"></span>
         Drop files here or click to <span id="browse">browse</span>.
-    
-    </div>          
-</DIV>
-<button id="startButton">Los gehts</button>
-    
-<DIV id="status"></DIV>
-<DIV id="list"></DIV>
+      </div>
+    </DIV>
+    <button id="startButton">Los gehts</button>
 
-<canvas id="canvas" style="display:none;"></canvas>
-</body>
+    <DIV id="status"></DIV>
+    <DIV id="list"></DIV>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+  </body>
+
+  <script type="text/javascript">
+    var app = Elm.Main.fullscreen();
+
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    var createVoice = function(freq){
+      var osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      osc.start();
+      var gainNode = audioCtx.createGain();
+      gainNode.gain.value = 1;
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+      setTimeout(function(){
+        osc.stop();
+      }, 1000);
+    }
+
+    // Triggered from Elm
+    app.ports.play.subscribe(function(freq){
+      createVoice(freq);
+    });
+
+    app.ports.hslPixel.send([1,2,3]);
+  </script>
 </html>
