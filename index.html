@@ -27,12 +27,11 @@
 
     <DIV id="status"></DIV>
     <DIV id="list"></DIV>
-
     <canvas id="canvas" style="display:none;"></canvas>
   </body>
 
   <script type="text/javascript">
-    var app = Elm.Main.fullscreen();
+    app = Elm.Main.fullscreen();
 
     var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -57,6 +56,6 @@
     });
 
     // Call this method to send a pixel to Elm, causing Elm to play sound
-    app.ports.hslPixel.send([1,2,3]);
+//    app.ports.hslPixel.send([1,2,3]);
   </script>
 </html>

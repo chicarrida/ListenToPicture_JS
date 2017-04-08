@@ -59,6 +59,7 @@ if (window.FileReader) {
                     img.file = file;
                     img.src = bin;
                     img.className = "thumb";
+                    img.id = "thumb";
                     fileCont.appendChild(img);
                     
                     var newFile = document.createElement('div');
@@ -116,24 +117,22 @@ function addEventHandler(obj, evt, handler) {
 }
 
 //from https://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
-function blala(){
-   
-    console.log("button pressed");
-    var img = document.createElement("img");
+function blala(){	   
+    var img = document.getElementById('thumb');
     var ctx = document.getElementById('canvas').getContext("2d");
-
     var width = $('img').width();
     var height = $('img').height();
     ctx.drawImage(img, 0, 0, width, height);
-    var imgData = ctx.createImageData(width, height);
-    var data = imgData.data;
+      
     var pixels = ctx.getImageData(0, 0, width, height);    
     for (var i = 0, ii = pixels.data.length; i < ii; i += 4) {
         var r = pixels.data[i + 0];
         var g = pixels.data[i + 1];
         var b = pixels.data[i + 2];
         var hsv =rgb2hsv(r,g,b);
-    }            
+        //console.log("r: "+r+" g: "+g+" b: "+b);
+        app.ports.hslPixel.send(hsv);
+    }
 }
 
 
